@@ -31,14 +31,13 @@ type TabsSectionProps = {
 }
 
 const TabsSection = ({ tabs, activeTab, onClickHandler }: TabsSectionProps) => {
-    const getRoundedStyle = (index: number) => index === (tabs.length - 1) ? "rounded-r-full" : "rounded-l-full";
-    const getActiveTabStyle = (tabTitle: string) => activeTab.title === tabTitle ? "bg-gray-100 text-black" : "bg-white text-gray-500";
+    const getActiveTabStyle = (tabTitle: string) => activeTab.title === tabTitle ? "bg-white text-black" : "bg-gray-100 text-gray-500 border hover:bg-gray-200";
 
     return (
-        <div className="flex mb-6">
-            {tabs.map((tab, index) => (
+        <div className="flex mb-2 m-auto w-5/6 md:w-96">
+            {tabs.map(tab => (
                 <button
-                    className={`flex-1 py-2 px-4 text-center ${getActiveTabStyle(tab.title)} ${getRoundedStyle(index)}`}
+                    className={`flex-1 py-2 px-4 text-center rounded ${getActiveTabStyle(tab.title)}`}
                     onClick={()  => onClickHandler(tab)}
                 >
                     {tab.title}
@@ -80,19 +79,17 @@ const GroupPage = () => {
   console.log('ACTIVE TAB: ', activeTab)
 
   return (
-    <div>
-      <div className="max-w-md mx-auto">
+    <div className="mx-auto">
         <h1 className="text-3xl font-bold mb-4 text-center">Our Munich bunch</h1>
         <div className="flex justify-center mb-6 space-x-2">
-          {[...Array(6)].map((_, i) => (
+            {[...Array(6)].map((_, i) => (
             <UserIcon key={i} />
-          ))}
+            ))}
         </div>
         <TabsSection tabs={TABS_WITH_ONLY_TITLE} activeTab={activeTab} onClickHandler={handleTabSelection}/>
         <div>
             <ActiveTabSection activeTab={activeTab} />
         </div>
-      </div>
     </div>
   );
 };

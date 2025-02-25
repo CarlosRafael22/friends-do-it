@@ -1,4 +1,3 @@
-
 type Props = 
   | { progress: number; total: number; progressArray?: never }
   | { progressArray: (boolean | undefined)[]; progress?: never; total?: never };

@@ -1,35 +1,35 @@
 import { Plan } from "@/models/plan";
-import UserIcon from "@/atoms/Icon/UserIcon";
 import CalendarIcon from "@/atoms/Icon/CalendarIcon";
 
 type PlanCardProps = Plan & {
-    onClickHandler?: () => void
+    onClickHandler: (id: string) => Promise<void>
 }
 
-const PlanCard = ({ name, date, isDone, users, onClickHandler }: PlanCardProps) => {
-    
+const PlanCard = ({ id, name, date, isDone, onClickHandler }: PlanCardProps) => {
+    const cardStyle = isDone ? "bg-gray-200" : "bg-white shadow-sm";
     return (
-    <div className="bg-white rounded-lg shadow-sm mb-4 p-4 flex items-center justify-between max-w-96">
+    <div className={`${cardStyle} rounded-lg mb-4 p-4 flex items-center justify-between max-w-96`}>
       <div className="max-w-80">
-        <h2 className="text-lg font-semibold">{name}</h2>
+        <h2 className={`text-lg font-semibold ${isDone && "line-through"}`}>{name}</h2>
         {date && (
           <div className="flex items-center mt-2 text-sm text-gray-500">
             <CalendarIcon />
             <span>{date}</span>
           </div>
         )}
-        <div className="flex mt-2 space-x-1">
+{/*         <div className="flex mt-2 space-x-1">
             {users && users.map((_, i) => (
               <UserIcon key={i} />
             ))}
-          </div>
+          </div> */}
       </div>
       <button
-        onClick={onClickHandler}
+        onClick={() => !isDone && onClickHandler(id)}
         className={`w-6 h-6 rounded-sm border-2 flex items-center justify-center focus:outline-none transition-colors duration-200 ${
           isDone ? 'bg-blue-500 border-blue-500' : 'bg-white border-gray-300'
         }`}
         aria-label={isDone ? "Uncheck activity" : "Check activity"}
+        disabled={isDone}
       >
         {isDone && (
           <svg className="w-4 h-4 text-white" viewBox="0 0 20 20" fill="currentColor">
